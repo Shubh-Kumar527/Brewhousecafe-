@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Brew House Cafe — Delhi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & BASE ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    :root {
+      --brown-deep:   #2C1810;
+      --brown-mid:    #5C3317;
+      --brown-warm:   #8B4513;
+      --orange-main:  #D2691E;
+      --orange-light: #E8843A;
+      --cream-dark:   #C4A882;
+      --cream-mid:    #E8D5B7;
+      --cream-light:  #FAF3E8;
+      --cream-pure:   #FFFDF8;
+      --text-dark:    #1E0F0A;
+      --text-mid:     #4A2C1A;
+      --text-light:   #8B6347;
+      --white:        #FFFFFF;
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-stamp:   'Bebas Neue', sans-serif;
+
+      --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow-sm: 0 2px 12px rgba(44,24,16,0.12);
+      --shadow-md: 0 8px 32px rgba(44,24,16,0.18);
+      --shadow-lg: 0 20px 60px rgba(44,24,16,0.25);
+      --radius: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--cream-pure);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+    /* ─── SCROLLBAR ──────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--cream-light); }
+    ::-webkit-scrollbar-thumb { background: var(--orange-main); border-radius: 3px; }
+
+    /* ─── NAVBAR ─────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem;
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(44,24,16,0.96);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-md);
+    }
+    .nav-logo {
+      font-family: var(--font-stamp);
+      font-size: 1.7rem;
+      letter-spacing: 2px;
+      color: var(--cream-mid);
+      text-decoration: none;
+      line-height: 1;
+    }
+    .nav-logo span { color: var(--orange-light); }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      color: var(--cream-mid);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: 0.8;
+      transition: opacity var(--transition), color var(--transition);
+    }
+    .nav-links a:hover { opacity: 1; color: var(--orange-light); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--cream-mid);
+      transition: all var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(44,24,16,0.97);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu a {
+      color: var(--cream-mid);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-style: italic;
+      transition: color var(--transition);
+    }
+    .mobile-menu a:hover { color: var(--orange-light); }
+
+    /* ─── HERO ───────────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      height: 100dvh; min-height: 600px;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(20,8,3,0.35) 0%,
+        rgba(20,8,3,0.10) 30%,
+        rgba(20,8,3,0.72) 75%,
+        rgba(20,8,3,0.92) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 2rem 5rem;
+      max-width: 1200px; margin: 0 auto; width: 100%;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--font-stamp);
+      font-size: 0.85rem;
+      letter-spacing: 4px;
+      color: var(--orange-light);
+      margin-bottom: 1rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900;
+      line-height: 0.95;
+      color: var(--cream-pure);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s 0.15s ease both;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--orange-light);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--cream-mid);
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .hero-ctas {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.45s ease both;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--orange-main);
+      color: var(--white);
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 4px 20px rgba(210,105,30,0.45);
+    }
+    .btn-primary:hover {
+      background: var(--orange-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(210,105,30,0.55);
+    }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      border: 2px solid rgba(255,255,255,0.4);
+      color: var(--cream-mid);
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      transition: all var(--transition);
+    }
+    .btn-outline:hover {
+      border-color: var(--orange-light);
+      color: var(--orange-light);
+    }
+
+    .hero-scroll {
+      position: absolute; bottom: 2rem; right: 2rem; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.4));
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 1; }
+    }
+
+    /* ─── SECTION HELPERS ────────────────────────────────────────── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    .section-eyebrow {
+      font-family: var(--font-stamp);
+      font-size: 0.8rem;
+      letter-spacing: 5px;
+      color: var(--orange-main);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      color: var(--brown-deep);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .section-title em { color: var(--orange-main); font-style: italic; }
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--text-light);
+      line-height: 1.75;
+      max-width: 560px;
+    }
+
+    /* ─── MARQUEE STRIP ──────────────────────────────────────────── */
+    .marquee-strip {
+      background: var(--brown-deep);
+      padding: 0.9rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-flex; gap: 3rem;
+      animation: marqueeScroll 22s linear infinite;
+    }
+    .marquee-item {
+      font-family: var(--font-stamp);
+      font-size: 0.9rem;
+      letter-spacing: 3px;
+      color: var(--cream-mid);
+      flex-shrink: 0;
+    }
+    .marquee-item span { color: var(--orange-light); margin: 0 1rem; }
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── ABOUT ──────────────────────────────────────────────────── */
+    #about {
+      background: var(--cream-light);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-images {
+      position: relative;
+      height: 520px;
+    }
+    .about-img-main {
+      position: absolute;
+      top: 0; left: 0;
+      width: 75%; height: 80%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      background: var(--cream-mid);
+    }
+    .about-img-secondary {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 52%; height: 55%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      border: 5px solid var(--cream-pure);
+      background: var(--cream-dark);
+    }
+    .about-badge {
+      position: absolute;
+      top: 50%; left: 60%; transform: translate(-50%, -50%);
+      width: 90px; height: 90px;
+      background: var(--orange-main);
+      border-radius: 50%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      box-shadow: var(--shadow-md);
+      z-index: 2;
+    }
+    .about-badge strong {
+      font-family: var(--font-stamp);
+      font-size: 1.6rem;
+      color: var(--white);
+      line-height: 1;
+    }
+    .about-badge small {
+      font-size: 0.55rem;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.8);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .about-text p {
+      color: var(--text-mid);
+      line-height: 1.85;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+    }
+    .about-stats {
+      display: flex; gap: 2rem; margin-top: 2rem;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--orange-main);
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      color: var(--text-light);
+      text-transform: uppercase;
+    }
+
+    /* ─── MENU ───────────────────────────────────────────────────── */
+    #menu { background: var(--cream-pure); }
+
+    .menu-tabs {
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .menu-tab {
+      padding: 0.6rem 1.5rem;
+      border-radius: 50px;
+      border: 2px solid var(--cream-dark);
+      background: transparent;
+      color: var(--text-mid);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .menu-tab.active, .menu-tab:hover {
+      background: var(--brown-mid);
+      border-color: var(--brown-mid);
+      color: var(--cream-mid);
+    }
+
+    .menu-category { display: none; }
+    .menu-category.active { display: grid; }
+
+    .menu-grid {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .menu-card {
+      background: var(--cream-light);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+    .menu-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+    .menu-card-img {
+      height: 200px; position: relative; overflow: hidden;
+      background: var(--cream-mid);
+    }
+    .menu-card-img img { transition: transform 0.5s ease; }
+    .menu-card:hover .menu-card-img img { transform: scale(1.07); }
+    .menu-card-body { padding: 1.25rem; }
+    .menu-item-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--brown-deep);
+      margin-bottom: 0.35rem;
+    }
+    .menu-item-desc {
+      font-size: 0.82rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 0.85rem;
+    }
+    .menu-item-footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .menu-price {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--orange-main);
+    }
+    .menu-tag {
+      font-size: 0.68rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.25rem 0.7rem;
+      border-radius: 20px;
+      background: var(--cream-mid);
+      color: var(--brown-mid);
+      font-weight: 500;
+    }
+    .menu-tag.bestseller { background: var(--orange-main); color: white; }
+    .menu-tag.new-tag { background: var(--brown-deep); color: var(--cream-mid); }
+
+    /* ─── GALLERY ────────────────────────────────────────────────── */
+    #gallery { background: var(--brown-deep); }
+    #gallery .section-eyebrow { color: var(--orange-light); }
+    #gallery .section-title { color: var(--cream-mid); }
+    #gallery .section-title em { color: var(--orange-light); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 240px);
+      gap: 12px;
+      margin-top: 3rem;
+    }
+    .gallery-item {
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      background: var(--brown-mid);
+    }
+    .gallery-item img { transition: transform 0.5s ease; }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-item::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(44,24,16,0);
+      transition: background var(--transition);
+    }
+    .gallery-item:hover::after { background: rgba(44,24,16,0.25); }
+
+    .gallery-item:nth-child(1) {
+      grid-column: 1 / 3;
+      grid-row: 1 / 2;
+    }
+    .gallery-item:nth-child(4) {
+      grid-column: 4 / 5;
+      grid-row: 1 / 3;
+    }
+    .gallery-item:nth-child(5) {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+    }
+
+    /* ─── HOURS & LOCATION ───────────────────────────────────────── */
+    #info {
+      background: var(--cream-light);
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .info-card {
+      background: var(--cream-pure);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .info-card-icon {
+      width: 52px; height: 52px;
+      background: var(--orange-main);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+    }
+    .info-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--brown-deep);
+      margin-bottom: 1.5rem;
+    }
+    .hours-list { list-style: none; }
+    .hours-list li {
+      display: flex; justify-content: space-between;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--cream-mid);
+      font-size: 0.9rem;
+    }
+    .hours-list li:last-child { border-bottom: none; }
+    .day { color: var(--text-mid); font-weight: 500; }
+    .time { color: var(--orange-main); font-weight: 500; }
+    .closed { color: var(--text-light) !important; }
+
+    .location-details p {
+      color: var(--text-mid);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    .location-details strong { color: var(--brown-deep); }
+
+    .map-placeholder {
+      width: 100%;
+      height: 200px;
+      background: var(--cream-mid);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+    .map-placeholder iframe {
+      width: 100%; height: 100%;
+      border: none; filter: sepia(20%) saturate(0.8);
+    }
+
+    /* ─── CONTACT ────────────────────────────────────────────────── */
+    #contact {
+      background: linear-gradient(135deg, var(--brown-deep) 0%, var(--brown-mid) 100%);
+      position: relative; overflow: hidden;
+    }
+    #contact::before {
+      content: 'BREW';
+      position: absolute; top: -3rem; right: -2rem;
+      font-family: var(--font-stamp);
+      font-size: 18rem;
+      color: rgba(255,255,255,0.03);
+      line-height: 1;
+      pointer-events: none;
+    }
+    #contact .section-eyebrow { color: var(--orange-light); }
+    #contact .section-title { color: var(--cream-pure); }
+    #contact .section-subtitle { color: var(--cream-mid); opacity: 0.8; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-form {
+      display: flex; flex-direction: column; gap: 1.1rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.45rem; }
+    .form-group label {
+      font-size: 0.78rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--cream-mid);
+      opacity: 0.7;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      color: var(--cream-mid);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      transition: border-color var(--transition), background var(--transition);
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder {
+      color: rgba(196,168,130,0.4);
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: var(--orange-light);
+      background: rgba(255,255,255,0.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select option { background: var(--brown-deep); }
+
+    .contact-info { padding-top: 1rem; }
+    .contact-info h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--cream-pure);
+      margin-bottom: 1.5rem;
+    }
+    .contact-social {
+      display: flex; flex-direction: column; gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .social-link {
+      display: flex; align-items: center; gap: 1rem;
+      text-decoration: none;
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      transition: all var(--transition);
+    }
+    .social-link.whatsapp {
+      background: rgba(37,211,102,0.12);
+      border: 1.5px solid rgba(37,211,102,0.25);
+      color: #4ade80;
+    }
+    .social-link.whatsapp:hover { background: rgba(37,211,102,0.22); }
+    .social-link.instagram {
+      background: rgba(228,64,95,0.12);
+      border: 1.5px solid rgba(228,64,95,0.25);
+      color: #f87171;
+    }
+    .social-link.instagram:hover { background: rgba(228,64,95,0.22); }
+    .social-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .social-link.whatsapp .social-icon { background: rgba(37,211,102,0.2); }
+    .social-link.instagram .social-icon { background: rgba(228,64,95,0.2); }
+    .social-text strong { display: block; font-weight: 500; font-size: 0.95rem; }
+    .social-text small { font-size: 0.78rem; opacity: 0.65; }
+
+    .contact-phone {
+      display: flex; align-items: center; gap: 0.8rem;
+      color: var(--cream-mid);
+      font-size: 0.95rem;
+      margin-top: 1.5rem;
+    }
+    .contact-phone strong { color: var(--cream-pure); font-size: 1.05rem; }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────── */
+    footer {
+      background: var(--brown-deep);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--font-stamp);
+      font-size: 2rem;
+      letter-spacing: 3px;
+      color: var(--cream-mid);
+      margin-bottom: 0.5rem;
+    }
+    .footer-logo span { color: var(--orange-light); }
+    .footer-tagline {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--cream-dark);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.7;
+    }
+    .footer-links {
+      display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .footer-links a {
+      color: var(--cream-dark);
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      opacity: 0.6;
+      transition: opacity var(--transition);
+    }
+    .footer-links a:hover { opacity: 1; }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--cream-dark);
+      opacity: 0.35;
+    }
+
+    /* ─── FLOATING WHATSAPP ──────────────────────────────────────── */
+    .fab-wa {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 900;
+      width: 54px; height: 54px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      text-decoration: none;
+      font-size: 1.4rem;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .fab-wa:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 32px rgba(37,211,102,0.6);
+    }
+    .fab-wa span { line-height: 1; }
+
+    /* ─── FADE-IN ON SCROLL ──────────────────────────────────────── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── MEDIA QUERIES ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      .about-grid,
+      .contact-grid,
+      .info-grid { grid-template-columns: 1fr; }
+
+      .about-images { height: 340px; }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 200px);
+      }
+      .gallery-item:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
+      .gallery-item:nth-child(4) { grid-column: 2; grid-row: 2 / 3; }
+      .gallery-item:nth-child(5) { grid-column: 1; grid-row: 2; }
+
+      .contact-grid { gap: 2.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 580px) {
+      section { padding: 4rem 1.25rem; }
+
+      .hero-content { padding: 0 1.25rem 4rem; }
+      .hero-ctas { flex-direction: column; }
+      .btn-primary, .btn-outline { text-align: center; justify-content: center; }
+
+      .about-images { height: 280px; }
+      .about-stats { gap: 1.25rem; }
+
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, 160px);
+      }
+
+      .menu-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ─────────────────────────────────────────────────────── -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">THE <span>BREW</span> HOUSE</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#info">Hours</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" class="mob-link">About</a>
+    <a href="#menu" class="mob-link">Menu</a>
+    <a href="#gallery" class="mob-link">Gallery</a>
+    <a href="#info" class="mob-link">Hours</a>
+    <a href="#contact" class="mob-link">Contact</a>
+  </div>
+
+  <!-- ── HERO ─────────────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content container">
+      <p class="hero-tag">☕ Est. 2019 · Hauz Khas, Delhi</p>
+      <h1 class="hero-title">Where Every<br/>Sip Tells a<br/><em>Story.</em></h1>
+      <p class="hero-sub">Specialty brews, soulful bites, and the coziest corner in Delhi — crafted for those who like it slow and intentional.</p>
+      <div class="hero-ctas">
+        <a href="#menu" class="btn-primary">Explore Menu →</a>
+        <a href="#contact" class="btn-outline">Reserve a Table</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ── MARQUEE ────────────────────────────────────────────────── -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-inner">
+      <span class="marquee-item">SPECIALTY COFFEE <span>✦</span></span>
+      <span class="marquee-item">FRESHLY BAKED <span>✦</span></span>
+      <span class="marquee-item">COLD BREWS <span>✦</span></span>
+      <span class="marquee-item">GOOD VIBES ONLY <span>✦</span></span>
+      <span class="marquee-item">HAUZ KHAS VILLAGE <span>✦</span></span>
+      <span class="marquee-item">INSTAGRAM WORTHY <span>✦</span></span>
+      <span class="marquee-item">SPECIALTY COFFEE <span>✦</span></span>
+      <span class="marquee-item">FRESHLY BAKED <span>✦</span></span>
+      <span class="marquee-item">COLD BREWS <span>✦</span></span>
+      <span class="marquee-item">GOOD VIBES ONLY <span>✦</span></span>
+      <span class="marquee-item">HAUZ KHAS VILLAGE <span>✦</span></span>
+      <span class="marquee-item">INSTAGRAM WORTHY <span>✦</span></span>
+    </div>
+  </div>
+
+  <!-- ── ABOUT ──────────────────────────────────────────────────── -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-images fade-in">
+          <div class="about-img-main">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=800&q=80" alt="Cafe interior with warm lighting" loading="lazy" />
+          </div>
+          <div class="about-img-secondary">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?auto=format&fit=crop&w=800&q=80" alt="Barista making coffee" loading="lazy" />
+          </div>
+          <div class="about-badge">
+            <strong>5★</strong>
+            <small>Google<br/>Rating</small>
+          </div>
+        </div>
+        <div class="about-text fade-in">
+          <p class="section-eyebrow">Our Story</p>
+          <h2 class="section-title">Born from a<br/>Love for the<br/><em>Perfect Brew.</em></h2>
+          <p>The Brew House Cafe started as a dream — a small, sunlit corner in Hauz Khas Village where Delhiites could slow down, sip something beautiful, and feel at home. Founded in 2019 by three friends obsessed with third-wave coffee culture, we set out to bring world-class brews to the heart of Delhi.</p>
+          <p>Every bean we use is single-origin, ethically sourced from farms in Coorg, Chikmagalur, and Araku Valley. Our baristas train with SCAA-certified masters to ensure each cup is a story worth drinking.</p>
+          <p>More than a cafe — we're a community. A place where first dates happen, novels get written, and friendships deepen over a flat white and a croissant.</p>
+          <div class="about-stats">
+            <div class="stat-item">
+              <span class="stat-num">50+</span>
+              <span class="stat-label">Menu Items</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">10K+</span>
+              <span class="stat-label">Happy Guests</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">6</span>
+              <span class="stat-label">Brew Origins</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MENU ───────────────────────────────────────────────────── -->
+  <section id="menu">
+    <div class="container">
+      <div class="fade-in">
+        <p class="section-eyebrow">What We Serve</p>
+        <h2 class="section-title">Our <em>Menu</em></h2>
+        <p class="section-subtitle">Crafted with care, served with love. All prices inclusive of taxes.</p>
+      </div>
+      <div class="menu-tabs" style="margin-top: 2.5rem;">
+        <button class="menu-tab active" data-tab="coffee">☕ Coffee</button>
+        <button class="menu-tab" data-tab="snacks">🥐 Snacks & Bakery</button>
+        <button class="menu-tab" data-tab="meals">🍽️ Meals</button>
+      </div>
+
+      <!-- Coffee -->
+      <div class="menu-category active menu-grid" id="tab-coffee">
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80" alt="Espresso" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Single Origin Espresso</div>
+            <div class="menu-item-desc">A bold 30ml shot of our house Coorg blend — rich, dark chocolate notes with a bright citrus finish.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹180</span>
+              <span class="menu-tag bestseller">Bestseller</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1561047029-3000c68339ca?auto=format&fit=crop&w=800&q=80" alt="Latte art" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Signature Latte</div>
+            <div class="menu-item-desc">Velvety micro-foam milk poured over a double shot, finished with our barista's signature latte art.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹280</span>
+              <span class="menu-tag bestseller">Bestseller</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80" alt="Cold brew" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Overnight Cold Brew</div>
+            <div class="menu-item-desc">Steeped for 18 hours in filtered water. Smooth, low-acid, naturally sweet — served over ice.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹320</span>
+              <span class="menu-tag new-tag">New</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=800&q=80" alt="Cappuccino" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Classic Cappuccino</div>
+            <div class="menu-item-desc">Equal parts espresso, steamed milk, and thick foam. Dusted with premium cocoa powder.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹250</span>
+              <span class="menu-tag">Popular</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80" alt="Pour over coffee" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">V60 Pour Over</div>
+            <div class="menu-item-desc">A meditative brew ritual — bright, nuanced, complex. Choose from 3 origins: Araku, Chikmagalur, or Nilgiri.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹350</span>
+              <span class="menu-tag">Specialty</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&w=800&q=80" alt="Matcha latte" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Ceremonial Matcha Latte</div>
+            <div class="menu-item-desc">Grade-A Japanese matcha whisked with oat milk. Earthy, creamy, and absolutely dreamy.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹300</span>
+              <span class="menu-tag new-tag">New</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Snacks -->
+      <div class="menu-category menu-grid" id="tab-snacks">
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" alt="Croissant" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Butter Croissant</div>
+            <div class="menu-item-desc">Flaky, laminated layers of pure butter pastry, baked fresh every morning at 6am in our in-house kitchen.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹220</span>
+              <span class="menu-tag bestseller">Bestseller</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1484723091739-30990ff30393?auto=format&fit=crop&w=800&q=80" alt="Avocado toast" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Smashed Avocado Toast</div>
+            <div class="menu-item-desc">Sourdough with smashed avocado, cherry tomatoes, microgreens, feta crumbles, and a lemon drizzle.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹380</span>
+              <span class="menu-tag bestseller">Bestseller</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80" alt="Chocolate pastry" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Pain au Chocolat</div>
+            <div class="menu-item-desc">A croissant dough wrapped around rich Belgian dark chocolate batons. Warm, oozy perfection.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹260</span>
+              <span class="menu-tag">Popular</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80" alt="Banana bread" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Walnut Banana Bread</div>
+            <div class="menu-item-desc">Dense, moist, and warmly spiced with cinnamon. Toasted on the griddle and served with honey butter.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹240</span>
+              <span class="menu-tag">Vegan Option</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1541014741259-de529411b96a?auto=format&fit=crop&w=800&q=80" alt="Sandwich" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Chicken Pesto Panini</div>
+            <div class="menu-item-desc">Grilled sourdough with shredded chicken, house pesto, sun-dried tomatoes, and smoked mozzarella.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹420</span>
+              <span class="menu-tag bestseller">Bestseller</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=800&q=80" alt="Cake slice" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Tiramisu Slice</div>
+            <div class="menu-item-desc">Mascarpone cream, espresso-soaked ladyfingers, and a generous dusting of Valrhona cocoa.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹320</span>
+              <span class="menu-tag">Dessert</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meals -->
+      <div class="menu-category menu-grid" id="tab-meals">
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80" alt="Eggs benedict" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Eggs Benedict</div>
+            <div class="menu-item-desc">Poached eggs on toasted English muffins, smoked salmon, baby spinach, and hollandaise sauce.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹560</span>
+              <span class="menu-tag bestseller">Bestseller</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" alt="Grain bowl" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Harvest Grain Bowl</div>
+            <div class="menu-item-desc">Quinoa, roasted sweet potato, chickpeas, kale, pickled onions, tahini dressing, and seeds.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹480</span>
+              <span class="menu-tag">Vegan</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1493770348161-369560ae357d?auto=format&fit=crop&w=800&q=80" alt="Full breakfast" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Brew House Full Breakfast</div>
+            <div class="menu-item-desc">Two eggs any style, turkey sausage, roasted tomatoes, sautéed mushrooms, hash browns, and sourdough toast.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹650</span>
+              <span class="menu-tag bestseller">Bestseller</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=800&q=80" alt="Pasta" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Truffle Mushroom Pasta</div>
+            <div class="menu-item-desc">Al dente tagliatelle tossed in truffle oil, cremini mushrooms, parmesan, and fresh thyme.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹580</span>
+              <span class="menu-tag new-tag">New</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80" alt="Pizza" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Margherita Sourdough Pizza</div>
+            <div class="menu-item-desc">72-hour fermented sourdough base, San Marzano tomato, buffalo mozzarella, and fresh basil.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹540</span>
+              <span class="menu-tag">Popular</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card fade-in">
+          <div class="menu-card-img">
+            <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80" alt="Chicken burger" loading="lazy" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-item-name">Crispy Chicken Burger</div>
+            <div class="menu-item-desc">Buttermilk fried chicken, house slaw, pickles, and our signature sriracha mayo in a brioche bun.</div>
+            <div class="menu-item-footer">
+              <span class="menu-price">₹520</span>
+              <span class="menu-tag bestseller">Bestseller</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GALLERY ──────────────────────────────────────────────────── -->
+  <section id="gallery">
+    <div class="container">
+      <div class="fade-in">
+        <p class="section-eyebrow">Life at the Brew House</p>
+        <h2 class="section-title">Our <em>Moments</em></h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item fade-in">
+          <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1200&q=80" alt="Cafe interior" loading="lazy" />
+        </div>
+        <div class="gallery-item fade-in">
+          <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?auto=format&fit=crop&w=800&q=80" alt="Latte art close up" loading="lazy" />
+        </div>
+        <div class="gallery-item fade-in">
+          <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" alt="People in cafe" loading="lazy" />
+        </div>
+        <div class="gallery-item fade-in">
+          <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1534040385115-33dcb3acba5b?auto=format&fit=crop&w=800&q=80" alt="Coffee and book" loading="lazy" />
+        </div>
+        <div class="gallery-item fade-in">
+          <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?auto=format&fit=crop&w=800&q=80" alt="Barista at work" loading="lazy" />
+        </div>
+        <div class="gallery-item fade-in">
+          <img crossorigin="anonymous" src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80" alt="Croissant and coffee" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOURS & LOCATION ─────────────────────────────────────────── -->
+  <section id="info">
+    <div class="container">
+      <div class="fade-in" style="margin-bottom: 3rem;">
+        <p class="section-eyebrow">Find Us</p>
+        <h2 class="section-title">Hours & <em>Location</em></h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-card fade-in">
+          <div class="info-card-icon">🕐</div>
+          <h3>Opening Hours</h3>
+          <ul class="hours-list">
+            <li><span class="day">Monday – Thursday</span><span class="time">8:00 AM – 10:00 PM</span></li>
+            <li><span class="day">Friday</span><span class="time">8:00 AM – 11:30 PM</span></li>
+            <li><span class="day">Saturday</span><span class="time">7:30 AM – 11:30 PM</span></li>
+            <li><span class="day">Sunday</span><span class="time">7:30 AM – 10:30 PM</span></li>
+            <li><span class="day">Public Holidays</span><span class="time closed">11:00 AM – 8:00 PM</span></li>
+          </ul>
+        </div>
+        <div class="info-card fade-in">
+          <div class="info-card-icon">📍</div>
+          <h3>Where to Find Us</h3>
+          <div class="location-details">
+            <p>
+              <strong>The Brew House Cafe</strong><br/>
+              Shop 14, Hauz Khas Village,<br/>
+              Near Hauz Khas Fort,<br/>
+              New Delhi – 110016
+            </p>
+            <p>
+              <strong>Getting here:</strong><br/>
+              2-min walk from Hauz Khas Metro Station (Yellow Line). 
+              Street parking available on Aurobindo Marg. 
+              Ola/Uber drop-off: "Hauz Khas Village Gate."
+            </p>
+          </div>
+          <div class="map-placeholder">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.0573695855!2d77.19498821508202!3d28.552539182449!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1d44736c6abd%3A0x657aa3e17bfdf601!2sHauz%20Khas%20Village!5e0!3m2!1sen!2sin!4v1620000000000"
+              allowfullscreen=""
+              loading="lazy"
+              title="Cafe location on map"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ───────────────────────────────────────────────────── -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <div class="fade-in" style="margin-bottom: 2.5rem;">
+            <p class="section-eyebrow">Get in Touch</p>
+            <h2 class="section-title">Book a Table<br/>or Just <em>Say Hi.</em></h2>
+            <p class="section-subtitle">We'd love to hear from you — whether it's a reservation, a large group, or just a question about our cold brew process.</p>
+          </div>
+          <form class="contact-form fade-in" id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" placeholder="Ananya Sharma" required />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="+91 98765 43210" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="ananya@example.com" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="guests">Guests</label>
+                <select id="guests">
+                  <option value="">Select</option>
+                  <option>1-2 people</option>
+                  <option>3-5 people</option>
+                  <option>6-10 people</option>
+                  <option>10+ people</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="date">Date & Time</label>
+                <input type="datetime-local" id="date" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message">Message (Optional)</label>
+              <textarea id="message" placeholder="Any dietary requirements, special occasions, or questions..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="border:none; cursor:pointer; font-size:0.95rem; padding: 1rem 2.5rem; align-self: flex-start;">
+              Send Message ✦
+            </button>
+          </form>
+        </div>
+
+        <div class="contact-info fade-in">
+          <h3>Connect With Us</h3>
+          <div class="contact-social">
+            <a href="https://wa.me/919876543210?text=Hi%20The%20Brew%20House%2C%20I%27d%20like%20to%20make%20a%20reservation!" class="social-link whatsapp" target="_blank" rel="noopener">
+              <div class="social-icon">💬</div>
+              <div class="social-text">
+                <strong>WhatsApp Us</strong>
+                <small>+91 98765 43210 · Usually replies in 10 min</small>
+              </div>
+            </a>
+            <a href="https://instagram.com/thebrewhousecafe.delhi" class="social-link instagram" target="_blank" rel="noopener">
+              <div class="social-icon">📸</div>
+              <div class="social-text">
+                <strong>@thebrewhousecafe.delhi</strong>
+                <small>Follow for daily specials, latte art & vibes</small>
+              </div>
+            </a>
+          </div>
+
+          <div style="padding: 1.5rem; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.08); margin-bottom: 1.5rem;">
+            <p style="color: var(--cream-mid); font-size: 0.9rem; line-height: 1.7; opacity: 0.85;">
+              <strong style="color: var(--cream-pure); display:block; margin-bottom: 0.5rem;">☕ Brew Tip</strong>
+              Follow us on Instagram before you visit — we drop daily specials, flash offers, and secret menu items exclusively for our followers.
+            </p>
+          </div>
+
+          <div style="padding: 1.5rem; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.08);">
+            <p style="color: var(--cream-mid); font-size: 0.85rem; line-height: 1.7; opacity: 0.75;">
+              <strong style="color: var(--cream-pure); display:block; margin-bottom: 0.5rem;">For Large Groups & Events</strong>
+              Planning a birthday, corporate brunch, or meet-up? We offer private seating for groups of 10+.
+              Call us directly at <strong style="color: var(--orange-light);">+91 98765 43210</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-logo">THE <span>BREW</span> HOUSE</div>
+    <p class="footer-tagline">"Where every sip tells a story."</p>
+    <div class="footer-links">
+      <a href="#hero">Home</a>
+      <a href="#about">About</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#info">Hours</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <p class="footer-copy">© 2024 The Brew House Cafe, Hauz Khas Village, New Delhi. All rights reserved.</p>
+  </footer>
+
+  <!-- ── FLOATING WA ─────────────────────────────────────────────────── -->
+  <a href="https://wa.me/919876543210" class="fab-wa" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <span>💬</span>
+  </a>
+
+  <!-- ── SCRIPTS ─────────────────────────────────────────────────────── -->
+  <script>
+    /* NAV SCROLL */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    /* HAMBURGER */
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mob-link').forEach(l => {
+      l.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+
+    /* MENU TABS */
+    document.querySelectorAll('.menu-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.menu-category').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tab-' + target).classList.add('active');
+        // re-trigger fade for newly visible cards
+        document.querySelectorAll('#tab-' + target + ' .fade-in').forEach(el => {
+          el.classList.remove('visible');
+          setTimeout(() => observer.observe(el), 10);
+        });
+      });
+    });
+
+    /* INTERSECTION OBSERVER — fade in */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    /* IMAGE FALLBACK */
+    document.querySelectorAll('img').forEach(img => {
+      img.addEventListener('error', function() {
+        this.style.display = 'none';
+        const parent = this.parentElement;
+        if (!parent.querySelector('.img-fallback')) {
+          const fb = document.createElement('div');
+          fb.className = 'img-fallback';
+          fb.style.cssText = 'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--cream-mid);font-size:2rem;';
+          fb.textContent = '☕';
+          parent.appendChild(fb);
+        }
+      });
+    });
+
+    /* FORM SUBMIT */
+    document.getElementById('contactForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const message = document.getElementById('message').value;
+      const wa = `https://wa.me/919876543210?text=Hi%2C%20I%27m%20${encodeURIComponent(name)}%20(${encodeURIComponent(phone)}).%20I'd%20like%20to%20book%20a%20table.%20${encodeURIComponent(message)}`;
+      window.open(wa, '_blank');
+    });
+  </script>
+</body>
+</html>
